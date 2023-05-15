@@ -16,4 +16,6 @@ router.get("/admin", isLoggedIn, isAdmin, (req, res, next) => {
   res.render("profile/admin-dashboard.hbs")
 })
 
+
+
 module.exports = router;

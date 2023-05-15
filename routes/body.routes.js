@@ -53,7 +53,9 @@ router.get("/list-games/:gameId", async (req, res, next) => {
     const response = await Games.findById(req.params.gameId);
 
     response.title = capitalize(response.title);
-    res.render("/list-games.hbs");
+    res.render("body/details.hbs", {
+      singleGame : response
+    });
   } catch (error) {
     next(error);
   }
@@ -73,14 +75,11 @@ router.post("/form-post/:gameId", async (req, res, next) => {
       description: description,
       author: author,
     });
-    res.redirect("/body/list-games");
+    res.redirect("/body/post");
   } catch (error) {
     next(error);
   }
 });
-
-
-
 
 
 module.exports = router;
