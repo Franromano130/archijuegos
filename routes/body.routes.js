@@ -59,11 +59,12 @@ router.get("/list-games/:gameId", async (req, res, next) => {
   }
 });
 
-router.get("/form-post", (req, res, next) => {
+router.get("/form-post/:gameId", (req, res, next) => {
+
   res.render("body/form-post.hbs");
 });
 
-router.post("/form-post", async (req, res, next) => {
+router.post("/form-post/:gameId", async (req, res, next) => {
   const { games, title, description, author } = req.body;
   try {
     const response = await Post.create({
@@ -72,7 +73,7 @@ router.post("/form-post", async (req, res, next) => {
       description: description,
       author: author,
     });
-    res.redirect("body/post.hbs");
+    res.redirect("/body/list-games");
   } catch (error) {
     next(error);
   }
