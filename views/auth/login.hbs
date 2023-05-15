@@ -1,16 +1,21 @@
 <div>
 
-  <h3>Log in</h3>
+  <h3>Formulario de acceso</h3>
 
-  <form action="/auth/signup" method="post">
+  <form action="/auth/login" method="post">
 
     <label for="username">Nombre de usuario</label>
     <input type="text" name="username" />
     <br />
     <label for="password">Contraseña</label>
-    <input type="text" name="password" />
+    <input type="password" name="password" />
     <br />
-    <button>Ingresar</button>
+    <button>Acceder</button>
+
+    {{#if this.errorMessage}}
+      <p style="color: red">{{this.errorMessage}} </p>
+    {{/if}}
+
   </form>
 
 </div>

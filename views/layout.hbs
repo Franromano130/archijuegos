@@ -1,27 +1,32 @@
-<!DOCTYPE html>
 <html lang="en">
 
-   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <title>{{appTitle}}</title>
-      <link rel="stylesheet" href="/stylesheets/style.css" />
-   </head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Archijuegos</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
 
-   <body>
-   <nav>
-<a href="/">home</a>
-   <a href="/auth/inicios">Inicio</a>
-   <a href="/auth/signup">registrarse</a>
-   <a href="/auth/login">Log in</a>
+  <body>
+    <nav>
 
+      <a href="/">Home</a>
 
+      {{#if this.isUserActive}}
+        <a href="/profile">Ver perfil</a>
+        <a href="/auth/logout">Cerrar Sesión</a>
+      {{else}}
 
-   </nav>
-      {{{body}}}
+        <a href="/auth/signup">Registrarse</a>
+        <a href="/auth/login">Log in</a>
+      {{/if}}
 
-      <script src="/js/script.js"></script>
-   </body>
+    </nav>
+
+    {{{body}}}
+
+    <script src="/js/script.js"></script>
+  </body>
 
 </html>

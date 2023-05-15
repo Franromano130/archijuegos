@@ -5,9 +5,9 @@ const userSchema = new Schema(
   {
     username: {
       type: String,
-      trim: true,
+      trim: true, // remueve los espacios vacíos antes o despues del string
       required: false,
-      unique: true
+      unique: false
     },
     email: {
       type: String,
@@ -19,6 +19,11 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true
+    },
+    role: {
+      type: String,
+      enum: ["user", "admin"],// los unicos posibles valores
+      default: "user"
     }
   },
   {
