@@ -17,4 +17,9 @@ router.use("/auth", authRoutes)
 const profileRouter = require("./profile.routes.js")
 router.use("/profile", profileRouter)
 
+const bodyRouter = require("./body.routes.js")
+router.use("/body", bodyRouter)
+
+
+
 module.exports = router;

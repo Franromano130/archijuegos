@@ -1,0 +1,17 @@
+<div>
+
+
+<h3>lista de videojuegos</h3>
+
+{{#each this.allGames}}
+<li>
+    <a href="/body/list-games/{{this._id}}">{{this.title}}</a>
+    <br>
+    <form action="/body/form-post"><button>Crear</button></form>
+    
+</li>
+
+
+{{/each}}
+
+</div>

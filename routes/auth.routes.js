@@ -5,6 +5,7 @@ const router = express.Router();
 const User = require("../models/User.model.js");
 const bcrypt = require("bcryptjs");
 
+
 // GET "/auth/signup" => esta ruta renderiza el formulario de registro
 router.get("/signup", (req, res, next) => {
   res.render("auth/signup.hbs");
@@ -109,7 +110,7 @@ router.post("/login", async (req, res, next) => {
     
 
     req.session.save(()=> {
-      res.redirect("/profile");
+      res.redirect("/body/inicio");
     })
 
 
@@ -130,5 +131,7 @@ router.get("/logout", (req, res, next) => {
   })
 
 })
+
+
 
 module.exports = router;
