@@ -54,21 +54,42 @@ router.get("/list-games/:gameId", async (req, res, next) => {
 
     response.title = capitalize(response.title);
     res.render("body/details.hbs", {
-      singleGame : response
+      singleGame: response,
     });
   } catch (error) {
     next(error);
   }
 });
 
+router.get("/edit-games/:gameId", (req, res, next) => {
+  const { gameId } = req.params;
 
-router.get ("/list-games/:gameId/edit", (req, res,next) => {
-  const { gameId}  = req.params
-  Games.findByIdAndUpdate(id, {title, description, url, releaseDate, company}, {new: true})
+  Games.findById(gameId)
+    .then((game) => res.render("body/edit-games.hbs", { game }))
+    .catch((err) => next(err));
+});
+
+router.post("/edit-games/:gameId", (req, res, next) => {
+  const { gameId } = req.params
+  console.log("PROBANDO", gameId);
+
+  const { title, decription, url, releaseDate, company } = req.body
+  console.log(req.body);
+
+  Games.findByIdAndUpdate(gameId, { title, decription, url, releaseDate, company })
+
+    .then((game) => {
+     
+      res.redirect("/body/list-games")
+    })
+    .catch((err) => next(err))
+
 })
 
-router.get("/form-post/:gameId", (req, res, next) => {
 
+//rutas de las publicaciones(los posts)
+
+router.get("/form-post/:gameId", (req, res, next) => {
   res.render("body/form-post.hbs");
 });
 
@@ -89,5 +110,8 @@ router.post("/form-post/:gameId", async (req, res, next) => {
   }
 });
 
+// router.get("/post", (req, res, next) => {
+//   res.render("/body/post.hbs")
+// })
 
 module.exports = router;
