@@ -1,0 +1,35 @@
+<h3>Edición de los videojuegos</h3>
+
+
+
+<div>
+
+    <form action="/body/edit-games/{{this._id}}" method="post">
+    
+        <div>
+            <label>title</label>
+            <input type="text" name="title" value="{{game.title}}">
+        </div>
+        <div>
+            <label>description</label>
+            <input type="text" name="description" value="{{game.description}}">
+        </div>
+        <div>
+            <label>url</label>
+            <input type="url" name="url" value="{{game.url}}">
+        </div>
+        <div>
+            <label>release date</label>
+            <input type="date" name="release date" value="{{game.releaseDate}}">
+        </div>
+        <div>
+            <label>company</label>
+            <input type="text" name="company" value="{{game.company}}">     
+        </div>
+        <button>editar</button>
+    
+    </form>
+
+
+
+</div>
