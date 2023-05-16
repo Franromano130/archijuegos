@@ -61,10 +61,18 @@ router.get("/list-games/:gameId", async (req, res, next) => {
   }
 });
 
+
+router.get ("/list-games/:gameId/edit", (req, res,next) => {
+  const { gameId}  = req.params
+  Games.findByIdAndUpdate(id, {title, description, url, releaseDate, company}, {new: true})
+})
+
 router.get("/form-post/:gameId", (req, res, next) => {
 
   res.render("body/form-post.hbs");
 });
+
+
 
 router.post("/form-post/:gameId", async (req, res, next) => {
   const { games, title, description, author } = req.body;
