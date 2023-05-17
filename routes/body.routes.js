@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const cloudinary = require('cloudinary').v2
+const cloudinary = require("cloudinary").v2;
 
 const User = require("../models/User.model.js");
 const Games = require("../models/Games.model.js");
 const Post = require("../models/Post.model.js");
 const capitalize = require("../utils/capitalize.js");
+const uploader = require("../middlewares/uploader.js");
 
 router.get("/inicio", (req, res, next) => {
   res.render("body/inicio.hbs");
@@ -15,30 +16,32 @@ router.post("/inicio", (req, res, next) => {});
 
 router.get("/create-data", (req, res, next) => {
   Games.findById(req.params.gameId)
-  .populate("User")
-  .then(() => {
-
-    
-    res.render("body/create-data.hbs")
-  }) 
-  .catch((err) => {
-    next(err)
-  }) 
-    
-  
+    .populate("User")
+    .then(() => {
+      res.render("body/create-data.hbs");
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
 
-router.post("/create-data", async (req, res, next) => {
+router.post("/create-data", uploader.single("url"), async (req, res, next) => {
+  console.log(req.file);
   const { title, description, url, releaseDate, company, creator } = req.body;
+  const { _id } = req.session.user;
+  if (req.file === undefined) {
+    next("No hay imagen");
+  }
   try {
     const response = await Games.create({
       title: title,
       description: description,
-      url: url,
+      url: req.file.path, //aqui es donde cloudinary nos devuelve el url de la img
       releaseDate: releaseDate,
       company: company,
-      creator: creator,
+      creator: _id,
     });
+
     res.redirect("/body/list-games");
   } catch (error) {
     next(error);
@@ -75,60 +78,76 @@ router.get("/list-games/:gameId", async (req, res, next) => {
 
 router.get("/edit-games/:gameId", (req, res, next) => {
   const { gameId } = req.params;
-  
+
   Games.findById(gameId)
     .then((game) => res.render("body/edit-games.hbs", { game }))
     .catch((err) => next(err));
 });
 
 router.post("/edit-games/:gameId", (req, res, next) => {
-  const { gameId } = req.params
+  const { gameId } = req.params;
   console.log("PROBANDO", gameId);
 
-  const { title, description, url, releaseDate, company } = req.body
+  const { title, description, url, releaseDate, company } = req.body;
   console.log(req.body);
 
-  Games.findByIdAndUpdate(gameId, { title, description, url, releaseDate, company })
+  Games.findByIdAndUpdate(gameId, {
+    title,
+    description,
+    url,
+    releaseDate,
+    company,
+  })
 
     .then(() => {
-     
-      res.redirect("/body/list-games")
+      res.redirect("/body/list-games");
     })
-    .catch((err) => next(err))
-
-})
+    .catch((err) => next(err));
+});
 
 router.post("/edit-games/:gameId/delete", (req, res, next) => {
   const { gameId } = req.params;
-console.log("TEST")
+  console.log("TEST");
   Games.findByIdAndDelete(gameId)
-  .then (() =>{
-
-
-res.redirect("/body/list-games")
-
-  }).catch((error) => {
-    next(error)
-  })
-
-
-})
+    .then(() => {
+      res.redirect("/body/list-games");
+    })
+    .catch((error) => {
+      next(error);
+    });
+});
 
 //rutas de las publicaciones(los posts)
 
 router.get("/form-post/:gameId", (req, res, next) => {
-  res.render("body/form-post.hbs");
+  const { gameId } = req.params;
+  Games.findById(gameId)
+    .then((gameData) => {
+      res.render("body/form-post.hbs", {
+        gameData,
+      });
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
 
 router.post("/form-post/:gameId", async (req, res, next) => {
-  const { games, title, description, author } = req.body;
+  const { title, description } = req.body;
+  const { _id } = req.session.user;
+  const { gameId } = req.params;
+
+  console.log("alv1", req.body);
   try {
     const response = await Post.create({
-      games: games,
+      games: gameId,
       title: title,
       description: description,
-      author: author,
+      author: _id,
     });
+
+    await Games.findByIdAndUpdate(gameId, { $push: { posts: response._id } });
+
     res.redirect("/body/post");
   } catch (error) {
     next(error);
@@ -136,7 +155,16 @@ router.post("/form-post/:gameId", async (req, res, next) => {
 });
 
 router.get("/post", (req, res, next) => {
-  res.render("body/post.hbs")
-})
+  const response = Post.findById(req.params.postId)
+
+    .then(() => {
+      res.render("body/post.hbs", {
+        singlePost: response,
+      });
+    })
+    .catch((error) => {
+      next(error);
+    });
+});
 
 module.exports = router;

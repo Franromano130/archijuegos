@@ -1,7 +1,7 @@
 <div>
 
   <h3>Formulario para crear los videojuegos</h3>
-  <form action="/body/create-data" method="post">
+  <form action="/body/create-data" method="post" enctype="multipart/form-data">
     <label for="title">Nombre del videojuego</label>
     <input type="text" name="title" />
     <br />
@@ -9,7 +9,7 @@
     <input type="text" name="description" />
     <br />
     <label for="url">Imagen del videojuego</label>
-    <input type="url" name="url" />
+    <input type="file" name="url" />
     <br />
     <label for="releaseDate">Fecha de lanzamiento</label>
     <input type="date" name="releaseDate" />
@@ -19,6 +19,8 @@
     <br />
     <button>Agregar Data</button>
   </form>
+
+ 
     
     
 

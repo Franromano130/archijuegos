@@ -1,10 +1,13 @@
 <div>
 
-  <form action="/body/form-post" method="post">
+  <h3>Escribe un post sobre {{gameData.title}}</h3>
+
+  <form action="/body/form-post/{{gameData._id}}" method="post">
+
     <label for="title">Titulo del post</label>
     <input type="text" name="title" />
     <br />
-    <textarea name="comentarios" rows="10" cols="40">Escribe aquí tus
+    <textarea name="description" rows="10" cols="40">Escribe aquí tus
       comentarios</textarea>
     <br />
     <button>Crear</button>
