@@ -69,7 +69,7 @@ router.get("/edit-games/:gameId", (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.post("/edit-games/:gameId", (req, res, next) => {
+router.post("/edit-games/:gameId/edit", (req, res, next) => {
   const { gameId } = req.params
   console.log("PROBANDO", gameId);
 
@@ -78,9 +78,9 @@ router.post("/edit-games/:gameId", (req, res, next) => {
 
   Games.findByIdAndUpdate(gameId, { title, decription, url, releaseDate, company })
 
-    .then((game) => {
+    .then(() => {
      
-      res.redirect("/body/list-games")
+      res.redirect("/body/list-games.hbs")
     })
     .catch((err) => next(err))
 
@@ -92,8 +92,6 @@ router.post("/edit-games/:gameId", (req, res, next) => {
 router.get("/form-post/:gameId", (req, res, next) => {
   res.render("body/form-post.hbs");
 });
-
-
 
 router.post("/form-post/:gameId", async (req, res, next) => {
   const { games, title, description, author } = req.body;
