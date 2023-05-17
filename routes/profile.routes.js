@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const cloudinary = require('cloudinary').v2
 
 const { isLoggedIn, isAdmin } = require("../middlewares/auth.middlewares.js");
 

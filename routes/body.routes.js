@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const cloudinary = require('cloudinary').v2
 
 const User = require("../models/User.model.js");
 const Games = require("../models/Games.model.js");
@@ -13,7 +14,18 @@ router.get("/inicio", (req, res, next) => {
 router.post("/inicio", (req, res, next) => {});
 
 router.get("/create-data", (req, res, next) => {
-  res.render("body/create-data.hbs");
+  Games.findById(req.params.gameId)
+  .populate("User")
+  .then(() => {
+
+    
+    res.render("body/create-data.hbs")
+  }) 
+  .catch((err) => {
+    next(err)
+  }) 
+    
+  
 });
 
 router.post("/create-data", async (req, res, next) => {
@@ -69,7 +81,7 @@ router.get("/edit-games/:gameId", (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.post("/edit-games/:gameId/edit", (req, res, next) => {
+router.post("/edit-games/:gameId", (req, res, next) => {
   const { gameId } = req.params
   console.log("PROBANDO", gameId);
 
@@ -80,12 +92,27 @@ router.post("/edit-games/:gameId/edit", (req, res, next) => {
 
     .then(() => {
      
-      res.redirect("/body/list-games.hbs")
+      res.redirect("/body/list-games")
     })
     .catch((err) => next(err))
 
 })
 
+router.post("/edit-games/:gameId/delete", (req, res, next) => {
+  const { gameId } = req.params;
+console.log("TEST")
+  Games.findByIdAndDelete(gameId)
+  .then (() =>{
+
+
+res.redirect("/body/list-games")
+
+  }).catch((error) => {
+    next(error)
+  })
+
+
+})
 
 //rutas de las publicaciones(los posts)
 
@@ -108,8 +135,8 @@ router.post("/form-post/:gameId", async (req, res, next) => {
   }
 });
 
-// router.get("/post", (req, res, next) => {
-//   res.render("/body/post.hbs")
-// })
+router.get("/post", (req, res, next) => {
+  res.render("body/post.hbs")
+})
 
 module.exports = router;

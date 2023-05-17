@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const cloudinary = require('cloudinary').v2
 
 // aqui iran nuestras rutas de auntenticacion
 const User = require("../models/User.model.js");

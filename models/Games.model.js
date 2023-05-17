@@ -7,12 +7,13 @@ const gameSchema = new Schema  ({
     url: String,
     releaseDate: Date,
     company: String,
-    creator: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-      },
+    creator: [{
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      
+  }]   
     
-})
+}) 
 
 const Games = model("Games", gameSchema)
 
