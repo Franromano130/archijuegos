@@ -63,7 +63,7 @@ router.get("/list-games/:gameId", async (req, res, next) => {
 
 router.get("/edit-games/:gameId", (req, res, next) => {
   const { gameId } = req.params;
-
+  
   Games.findById(gameId)
     .then((game) => res.render("body/edit-games.hbs", { game }))
     .catch((err) => next(err));
@@ -73,10 +73,10 @@ router.post("/edit-games/:gameId/edit", (req, res, next) => {
   const { gameId } = req.params
   console.log("PROBANDO", gameId);
 
-  const { title, decription, url, releaseDate, company } = req.body
+  const { title, description, url, releaseDate, company } = req.body
   console.log(req.body);
 
-  Games.findByIdAndUpdate(gameId, { title, decription, url, releaseDate, company })
+  Games.findByIdAndUpdate(gameId, { title, description, url, releaseDate, company })
 
     .then(() => {
      
