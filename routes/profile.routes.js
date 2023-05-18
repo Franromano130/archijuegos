@@ -7,14 +7,20 @@ const { isLoggedIn, isAdmin } = require("../middlewares/auth.middlewares.js");
 
 
 // rutas privadas. Solo accesibles para usuarios registrados
-router.get("/", isLoggedIn, (req, res, next) => {
+router.get("/dashboard", isLoggedIn, (req, res, next) => {
   console.log("quien me hace la llamada", req.session.user);
 
-  res.render("profile/dashboard.hbs");
+  res.render("profile/dashboard.hbs", {
+    isUserActive: req.session.user !== undefined,
+    isUserAdmin: req.session.user.role === "admin"
+  });
 });
 
-router.get("/admin", isLoggedIn, isAdmin, (req, res, next) => {
-  res.render("profile/admin-dashboard.hbs")
+router.get("/admin-dashboard", isLoggedIn, isAdmin, (req, res, next) => {
+  res.render("profile/admin-dashboard.hbs", {
+    isUserActive: req.session.user !== undefined,
+    isUserAdmin: req.session.user.role === "admin"
+  })
 })
 
 

@@ -5,16 +5,19 @@ const cloudinary = require("cloudinary").v2;
 const User = require("../models/User.model.js");
 const Games = require("../models/Games.model.js");
 const Post = require("../models/Post.model.js");
+
+const { isLoggedIn, isAdmin } = require("../middlewares/auth.middlewares.js")
 const capitalize = require("../utils/capitalize.js");
 const uploader = require("../middlewares/uploader.js");
 
-router.get("/inicio", (req, res, next) => {
+
+router.get("/inicio", isLoggedIn, (req, res, next) => {
   res.render("body/inicio.hbs");
 });
 
-router.post("/inicio", (req, res, next) => {});
+router.post("/inicio", isLoggedIn, (req, res, next) => {});
 
-router.get("/create-data", (req, res, next) => {
+router.get("/create-data", isLoggedIn, isAdmin, (req, res, next) => {
   Games.findById(req.params.gameId)
     .populate("User")
     .then(() => {
@@ -25,7 +28,7 @@ router.get("/create-data", (req, res, next) => {
     });
 });
 
-router.post("/create-data", uploader.single("url"), async (req, res, next) => {
+router.post("/create-data", isLoggedIn, isAdmin, uploader.single("url"), async (req, res, next) => {
   console.log(req.file);
   const { title, description, url, releaseDate, company, creator } = req.body;
   const { _id } = req.session.user;
@@ -48,7 +51,7 @@ router.post("/create-data", uploader.single("url"), async (req, res, next) => {
   }
 });
 
-router.get("/list-games", (req, res, next) => {
+router.get("/list-games", isLoggedIn, (req, res, next) => {
   Games.find()
     .select({ title: 1 })
     .then((response) => {
@@ -63,7 +66,7 @@ router.get("/list-games", (req, res, next) => {
     });
 });
 
-router.get("/list-games/:gameId", async (req, res, next) => {
+router.get("/list-games/:gameId", isLoggedIn, async (req, res, next) => {
   try {
     const response = await Games.findById(req.params.gameId);
 
@@ -76,7 +79,7 @@ router.get("/list-games/:gameId", async (req, res, next) => {
   }
 });
 
-router.get("/edit-games/:gameId", (req, res, next) => {
+router.get("/edit-games/:gameId", isLoggedIn, (req, res, next) => {
   const { gameId } = req.params;
 
   Games.findById(gameId)
@@ -84,7 +87,7 @@ router.get("/edit-games/:gameId", (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.post("/edit-games/:gameId", (req, res, next) => {
+router.post("/edit-games/:gameId", isLoggedIn, (req, res, next) => {
   const { gameId } = req.params;
   console.log("PROBANDO", gameId);
 
@@ -105,7 +108,7 @@ router.post("/edit-games/:gameId", (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.post("/edit-games/:gameId/delete", (req, res, next) => {
+router.post("/edit-games/:gameId/delete", isLoggedIn, isAdmin, (req, res, next) => {
   const { gameId } = req.params;
   console.log("TEST");
   Games.findByIdAndDelete(gameId)

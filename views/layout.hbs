@@ -12,10 +12,11 @@
     <nav>
 
       {{!-- <a href="/">Home</a> --}}
+      
 
       {{#if this.isUserActive}}
         <a href="/body/inicio">Inicio</a>
-        <a href="/profile">Perfil</a>
+        <a href="{{#if this.isUserAdmin}}/profile/admin-dashboard{{else}}/profile/dashboard{{/if}}">Perfil</a>
 
       {{/if}}
 

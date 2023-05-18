@@ -14,7 +14,7 @@ function updateLocals(req, res, next) {
     } else {
       res.locals.isUserActive = true;
     }
-    // al tener diferentes roles (user y admin), y enlaces de roles, el condiconal arriba debe incluir variables locales para mostar/ocultar esos enlaces
+    // al tener diferentes roles (user y admin), y enlaces de roles, el condicional arriba debe incluir variables locales para mostar/ocultar esos enlaces
     next();
 }
 
