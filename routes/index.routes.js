@@ -22,6 +22,6 @@ const gameRouter = require("./game.routes.js")
 router.use("/body", gameRouter)
 
 const postRouter = require("./post.routes.js")
-router.use("/post", postRouter)
+router.use("/body", postRouter)
 
 module.exports = router;
