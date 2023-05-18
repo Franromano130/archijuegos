@@ -1,0 +1,20 @@
+<div>
+
+<h3>Lista de Post</h3>
+
+{{#each this.allPost}}
+<li>
+    <a href="/body/post/{{this._id}}">{{this.title}}</a>
+    <br>
+     <a href="/body/edit-posts/{{this._id}}"><button>Editar</button></a>
+     <br>
+</li>
+
+
+{{/each}}
+
+
+
+
+
+</div>

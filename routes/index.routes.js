@@ -18,9 +18,10 @@ router.use("/auth", authRoutes)
 const profileRouter = require("./profile.routes.js")
 router.use("/profile", profileRouter)
 
-const bodyRouter = require("./body.routes.js")
-router.use("/body", bodyRouter)
+const gameRouter = require("./game.routes.js")
+router.use("/body", gameRouter)
 
-
+const postRouter = require("./post.routes.js")
+router.use("/post", postRouter)
 
 module.exports = router;
