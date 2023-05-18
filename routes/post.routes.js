@@ -22,7 +22,7 @@ router.get("/form-post/:gameId", (req, res, next) => {
 });
 
 router.post("/form-post/:gameId", async (req, res, next) => {
-  const { title, description } = req.body;
+  const { title, description, url } = req.body;
   const { _id } = req.session.user;
   const { gameId } = req.params;
 
@@ -46,7 +46,7 @@ router.post("/form-post/:gameId", async (req, res, next) => {
 
 router.get("/post-list", (req, res, next) => {
   Post.find()
-    .select()
+    .select({ title: 1 })
     .then((response) => {
       console.log(response);
 
@@ -59,20 +59,19 @@ router.get("/post-list", (req, res, next) => {
     });
 });
 
-router.get("/post/:postId", (req, res, next) => {
-  const response = Post.findById(req.params.postId)
+router.get("/post/:postId", async(req, res, next) => {
+  try {
+    const response = await Post.findById(req.params.postId);
 
-    .then(() => {
-      res.render("body/post.hbs", {
-        singlePost: response,
-      });
-    })
-    .catch((error) => {
-      next(error);
+    response.title = capitalize(response.title);
+    res.render("body/post.hbs", {
+      singlePost: response,
     });
+  } catch (error) {
+    next(error);
+  }
 });
-
-router.get("/edit-post/:postId", (req, res, next) => {
+router.get("/edit-posts/:postId", (req, res, next) => {
   const { postId } = req.params;
 
   Post.findById(postId)
@@ -87,7 +86,7 @@ router.post("/edit-posts/:postId", (req, res, next) => {
   const { title, description } = req.body;
   console.log(req.body);
 
-  Post.findByIdAndUpdate(gameId, {
+  Post.findByIdAndUpdate(postId, {
     title,
     description,
   })
@@ -97,5 +96,20 @@ router.post("/edit-posts/:postId", (req, res, next) => {
     })
     .catch((err) => next(err));
 });
+
+
+  router.post("/edit-posts/:postId/delete", (req, res, next) => {
+    const { postId } = req.params;
+    console.log("TEST");
+    Post.findByIdAndDelete(postId)
+      .then(() => {
+        res.redirect("/body/post-list");
+      })
+      .catch((error) => {
+        next(error);
+      });
+  });
+  
+
 
 module.exports = router;

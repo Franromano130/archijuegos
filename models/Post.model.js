@@ -7,6 +7,7 @@ const postSchema = new Schema({
   },
   title: String,
   description: String,
+  url: String,
   author: {
     type: Schema.Types.ObjectId,
     ref: "User",
