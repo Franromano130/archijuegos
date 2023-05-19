@@ -1,23 +1,24 @@
-<div>
+<div class="d-flex flex-column align-items-center text-bg-info p-3">
 
   <h3>Formulario para crear los videojuegos</h3>
+  <br>
   <form action="/body/create-data" method="post" enctype="multipart/form-data">
-    <label for="title">Nombre del videojuego</label>
-    <input type="text" name="title" />
+    <label for="title" class="form-label">Nombre del videojuego</label>
+    <input type="text" class="form-control" name="title" />
     <br />
-    <label for="description">Descripcion del videojuego</label>
-    <input type="text" name="description" />
+    <label for="description" class="form-label">Descripcion del videojuego</label>
+    <input type="text" class="form-control" name="description" />
     <br />
-    <label for="url">Imagen del videojuego</label>
-    <input type="file" name="url" />
+    <label for="url" class="form-label">Imagen del videojuego</label>
+    <input type="file" class="form-control" name="url" />
     <br />
-    <label for="releaseDate">Fecha de lanzamiento</label>
-    <input type="date" name="releaseDate" />
+    <label for="releaseDate" class="form-label">Fecha de lanzamiento</label>
+    <input type="date" class="form-control" name="releaseDate" />
     <br />
-    <label for="company">Empresa</label>
-    <input type="text" name="company" />
-    <br />
-    <button>crear</button>
+    <label for="company" class="form-label">Empresa</label>
+    <input type="text"  class="form-control" name="company" />
+    <br>
+    <button class="btn btn-success">Crear</button>
 
   </form>
 

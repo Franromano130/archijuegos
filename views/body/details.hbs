@@ -1,16 +1,19 @@
-<div>
-<h3>Detalles de los juegos</h3>
-    <div>
-        <h4>{{singleGame.title}}
+<div class="d-flex flex-column align-items-center text-bg-info p-3">
+    <h2>Detalles de los juegos</h3>
+    <br>
+    <div class="d-flex flex-column align-items-center text-center">
+        <h4 class="text-white">{{singleGame.title}}</h4>
             <br> 
-            <br>{{this.singleGame.description}}
+            <br><p class="fs-5">{{this.singleGame.description}}
             <br> {{this.singleGame.releaseDate}}
             <br> {{this.singleGame.company}}
-            <br>{{this.singleGame.creator}}</h4>
+            <br>{{this.singleGame.creator}} </p>
+           <br>
         <img src="{{this.singleGame.url}}" alt="Game"  width="300px">
         {{#each this.singleGame.type}}
         <li>{{this}}</li>
         {{/each}} 
+        <br>
     </div>
 </div>
 

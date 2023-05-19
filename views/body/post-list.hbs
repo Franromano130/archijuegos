@@ -1,18 +1,20 @@
 <div class="d-flex flex-column align-items-center text-bg-info p-3">
 
-<h3>Lista de Post</h3>
+<h2>Todos los Posts</h3>
+<br>
 
 {{#each this.allPost}}
-<li>
 
-    <a href="/body/post/{{this._id}}">{{this.title}}</a>
+
+    <a class="nav-link active text-white fs-3" href="/body/post/{{this._id}}">{{this.title}}</a>
     <br>
     {{#if ../this.isUserAdmin}}
-     <a href="/body/edit-posts/{{this._id}}">
-     <button>Editar</button></a> 
-     <form method="post" action="/body/edit-posts/{{this._id}}/delete"><button>borrar</button></form>
-      {{/if}}
-</li>
+     <a  class="nav-link active text-white" href="/body/edit-posts/{{this._id}}">
+     <button class="btn btn-warning">Editar</button></a> 
+     <form method="post" action="/body/edit-posts/{{this._id}}/delete"><button class="btn btn-danger">borrar</button></form>
+    {{/if}}
+
+
 
 
 {{/each}}

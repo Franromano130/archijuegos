@@ -1,24 +1,30 @@
-<div>
+<div class="d-flex flex-column align-items-center text-bg-info p-3">
 
-  <h3>lista de videojuegoos</h3>
+  <h1>Lista de Videojuegos</h3>
+  <br>
+  <br>
 
   {{#each this.allGames}}
-    <li>
-      <a href="/body/list-games/{{this._id}}">{{this.title}}</a>
+    
+      <a  class="nav-link active text-white fs-2"  href="/body/list-games/{{this._id}}">{{this.title}}</a>
       <br />
 
-      <a href="/body/form-post/{{this._id}}"><button>Crear</button></a>
+      <a href="/body/form-post/{{this._id}}"><button class="btn btn-success">Crear</button></a>
+      <br>
       {{#if ../this.isUserAdmin}}
-        <a href="/body/edit-games/{{this._id}}"><button>Editar</button></a>
+        <a href="/body/edit-games/{{this._id}}"><button class="btn btn-warning">Editar</button></a>
         <br />
 
         <form
           method="post"
           action="/body/edit-games/{{this._id}}/delete"
-        ><button>borrar</button></form>
+        ><button class="btn btn-danger">borrar</button></form>
       {{/if}}
+      <br>
+      <br>
+      <br>
 
-    </li>
+    
 
   {{/each}}
 

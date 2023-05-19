@@ -1,19 +1,22 @@
-<div>
-
+<div class="d-flex flex-column align-items-center text-bg-info p-3">
+<br>
   <h3>Escribe un post sobre {{gameData.title}}</h3>
+  <br>
+  <div class="text-bg-success">
+    <form action="/body/form-post/{{gameData._id}}" method="post">
 
-  <form action="/body/form-post/{{gameData._id}}" method="post">
-
-    <label for="title">Titulo del post</label>
-    <input type="text" name="title" />
-    <br />
-    <textarea name="description" rows="10" cols="40">Escribe aquí tus
-      comentarios</textarea>
-    <br />
-    <label for="url">Imagenes relacionadas</label>
-    <input type="file" name="url" />
-    <br>
-    <button>Crear</button>
-  </form>
+      <label for="title">TITULO DEL POST</label>
+      <input type="text" name="title" />
+      <br />
+      <textarea name="description" rows="10" cols="40">Escribe aquí tus
+        comentarios</textarea>
+      <br />
+  
+      <br>
+      <button class="btn btn-warning">Crear</button>
+    </form>
+  </div>
+  <br>
+  <br>
 
 </div>
