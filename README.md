@@ -177,9 +177,9 @@ User model
 
 ## Collaborators
 
-[Developer 1 name](https://github.com/alvaritohegon)
+[Alvaro Hegon](https://github.com/alvaritohegon)
 
-[Developer 2 name](https://github.com/Franromano130)
+[Francisco Romano](https://github.com/Franromano130)
 
 ### Project
 
