@@ -68,7 +68,7 @@ router.get("/list-games", isLoggedIn, (req, res, next) => {
 
 router.get("/list-games/:gameId", isLoggedIn, async (req, res, next) => {
   try {
-    const response = await Games.findById(req.params.gameId);
+    const response = await Games.findById(req.params.gameId); 
 
     response.title = capitalize(response.title);
     res.render("body/details.hbs", {

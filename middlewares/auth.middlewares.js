@@ -9,11 +9,21 @@ function isLoggedIn(req, res, next) {
 }
 
 function updateLocals(req, res, next) {
+    console.log("hola", req.session.user);
     if (req.session.user === undefined) {
       res.locals.isUserActive = false;
-    } else {
-      res.locals.isUserActive = true;
+      res.locals.isUserAdmin = false;
+    } 
+    else if (req.session.user.role === "admin") {
+        res.locals.isUserAdmin = true ;
+        res.locals.isUserActive = true;
     }
+    else {
+      res.locals.isUserActive = true;
+      res.locals.isUserAdmin = false;
+    }
+  
+    
     // al tener diferentes roles (user y admin), y enlaces de roles, el condicional arriba debe incluir variables locales para mostar/ocultar esos enlaces
     next();
 }

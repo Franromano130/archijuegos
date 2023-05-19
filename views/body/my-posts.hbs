@@ -1,0 +1,14 @@
+<h3>Mis Posts</h3>
+
+{{#if posts}}
+  <ul>
+    {{#each posts}}
+      <li>
+        <h4>{{title}}</h4>
+        <p>{{description}}</p>
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p>No se encontraron posts.</p>
+{{/if}}

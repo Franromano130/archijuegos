@@ -59,7 +59,7 @@ router.get("/post-list", (req, res, next) => {
     });
 });
 
-router.get("/post/:postId", async(req, res, next) => {
+router.get("/post/:postId", async (req, res, next) => {
   try {
     const response = await Post.findById(req.params.postId);
 
@@ -97,19 +97,38 @@ router.post("/edit-posts/:postId", (req, res, next) => {
     .catch((err) => next(err));
 });
 
+router.post("/edit-posts/:postId/delete", (req, res, next) => {
+  const { postId } = req.params;
+  console.log("TEST");
+  Post.findByIdAndDelete(postId)
+    .then(() => {
+      res.redirect("/body/post-list");
+    })
+    .catch((error) => {
+      next(error);
+    });
+});
 
-  router.post("/edit-posts/:postId/delete", (req, res, next) => {
-    const { postId } = req.params;
-    console.log("TEST");
-    Post.findByIdAndDelete(postId)
-      .then(() => {
-        res.redirect("/body/post-list");
-      })
-      .catch((error) => {
-        next(error);
-      });
-  });
-  
+router.get("/my-post", async (req, res, next) => {
+  const userId = req.params.userId; // 1
 
+  // 2 y 3
+  Post.find({ userId })
+    .select("title description")
+    .then((posts) => {
+      // Renderiza la vista "my-posts.hbs" y pasa los posts como datos
+      res.render("body/my-posts.hbs", { posts });
+    })
+    .catch((error) => {
+      next(error);
+    });
+});
 
 module.exports = router;
+
+// mostrar un hbs (my-post.hbs) y dentro de esta vista lo que queremos mostar son los post que ha creado cada usuario.
+//? ue necesitamos para buscar los POSTS que ha creado un usuario en especifico. (el id del usuario)
+//? 1de donde sacamos el ID de ese usuario. (de la base de datos)
+//? 2que metodo necesitamos para buscar varios elementos en la base de datos. (.find)
+//? con el metodo anterior, como le podemos indicar una condición de búsqueda específica a ese método. (.select)
+//? yo necesito alguna informacion del lado del cliente para hacer la funcionalidad? NO

@@ -1,10 +1,11 @@
-<div>
+<div class="d-flex flex-column align-items-center text-bg-info p-3">
 <h3>Publicación</h3>
+<br>
     <div>
         <h4>{{singlePost.title}}
             <br> 
             <br>{{this.singlePost.description}}
-            <br> {{this.singlePost.author}}
+            {{!-- <br> {{this.singlePost.author}} --}}
         {{#each this.singlePost.type}}
         <li>{{this}}</li>
         {{/each}}
